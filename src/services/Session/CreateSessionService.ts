@@ -1,0 +1,27 @@
+import { getCustomRepository } from "typeorm";
+import bcrypt from "bcryptjs";
+
+import { UserRepository } from "../../repositories/UserRepository";
+
+export class CreateSessionService {
+  async execute(email: string, password: string) {
+    const userRepository = getCustomRepository(UserRepository);
+
+    try {
+      const user = await userRepository.findOne({
+        where: { email },
+      });
+
+      const password_decoded = await bcrypt.compare(password, user.password);
+      if (!password_decoded) throw new Error("Invalid password");
+
+      return {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+}
