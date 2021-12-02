@@ -6,7 +6,7 @@ require("dotenv").config({
   path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
 });
 
-interface IUserSession {
+export interface IUserSession {
   user: { email: string; id: string };
   iat: number;
 }
