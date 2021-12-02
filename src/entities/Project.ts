@@ -9,19 +9,16 @@ import {
 import { v4 as uuid } from "uuid";
 import { UserToProject } from "./UserToProject";
 
-@Entity("users")
-export class User {
+@Entity("projects")
+export class Project {
   @PrimaryColumn()
   readonly id: string;
 
   @Column()
-  username: string;
+  name: string;
 
   @Column()
-  email: string;
-
-  @Column()
-  password: string;
+  value: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -29,8 +26,8 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => UserToProject, (userToProject) => userToProject.user)
-  userToProject: UserToProject[];
+  @OneToMany(() => UserToProject, (userToProject) => userToProject.project)
+  projectToUser: UserToProject[];
 
   constructor() {
     if (!this.id) this.id = uuid();
