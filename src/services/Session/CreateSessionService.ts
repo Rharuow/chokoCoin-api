@@ -21,6 +21,7 @@ export class CreateSessionService {
         email: user.email,
       };
     } catch (error) {
+      console.log("Create Session Service = ", error.message);
       throw new Error(error.message);
     }
   }
