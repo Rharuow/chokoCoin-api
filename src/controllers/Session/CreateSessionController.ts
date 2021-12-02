@@ -7,20 +7,20 @@ export class CreateSessionController {
     const createSessionService = new CreateSessionService();
 
     try {
+      console.log("password = ", typeof req.body.password);
       const user = await createSessionService.execute(
         req.body.email,
         req.body.password
       );
 
-      console.log("private key = ", process.env.SECRET);
-
       const token = jwt.sign(
-        { user: { email: user.email } },
+        { user: { email: user.email, id: user.id } },
         process.env.SECRET
       );
 
       return res.json({ token });
     } catch (error) {
+      console.log("error session request = ", error.message);
       return res.status(401).json({ message: error.message });
     }
   }
