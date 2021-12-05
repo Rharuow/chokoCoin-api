@@ -3,12 +3,15 @@ import { CreateProjectService } from "../../services/Project/CreateProjectServic
 
 export class CreateProjectController {
   async handle(req: Request, res: Response) {
-    const params = req.body as { name: string; value: number };
+    const { name, value } = req.body;
 
     const createProjectService = new CreateProjectService();
 
     try {
-      const project = await createProjectService.execute(params);
+      const project = await createProjectService.execute({
+        name,
+        value: Number(value),
+      });
 
       return res.json(project);
     } catch (error) {

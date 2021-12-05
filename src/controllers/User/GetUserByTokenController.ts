@@ -7,8 +7,8 @@ export class GetUserByTokenController {
 
     const token = req.headers.authorization;
 
-    const users = await getUserByTokenService.execute(token);
+    const user = await getUserByTokenService.execute(token);
 
-    return res.json(users);
+    return res.json(user);
   }
 }

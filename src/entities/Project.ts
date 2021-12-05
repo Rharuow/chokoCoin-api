@@ -17,7 +17,7 @@ export class Project {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ precision: 2, type: "decimal" })
   value: number;
 
   @CreateDateColumn()

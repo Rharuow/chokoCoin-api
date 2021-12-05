@@ -34,8 +34,8 @@ router.post(
   "/login",
   /*ensurePermissionRegister,*/ createSessionController.handle
 );
-router.post("/project", ensureAuthenticated, createProjectController.handle);
-router.get("/project", ensureAuthenticated, listProjectController.handle);
+router.post("/projects", ensureAuthenticated, createProjectController.handle);
+router.get("/projects", ensureAuthenticated, listProjectController.handle);
 
 router.get("/", rootController.run);
 
