@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { RootController } from "./controllers/RootController";
 import { CreateUserController } from "./controllers/User/CreateUserController";
+import { RegistrateUserController } from "./controllers/User/RegistrateUserController";
 import { DeleteUserController } from "./controllers/User/DeleteUserController";
 import { ListUserController } from "./controllers/User/ListUserController";
 import { GetUserByTokenController } from "./controllers/User/GetUserByTokenController";
@@ -14,6 +15,7 @@ import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
 const router = Router();
 
 const createUserController = new CreateUserController();
+const registrateUserController = new RegistrateUserController();
 const deleteUserController = new DeleteUserController();
 const listUserController = new ListUserController();
 const getUserByTokenController = new GetUserByTokenController();
@@ -28,7 +30,8 @@ const rootController = new RootController();
 router.get("/user", ensureAuthenticated, getUserByTokenController.handle);
 
 router.get("/users", ensurePermissionRegister, listUserController.handle);
-router.post("/users", ensurePermissionRegister, createUserController.handle);
+router.post("/users", ensurePermissionRegister, registrateUserController.handle);
+router.post("/users/confirmation", ensurePermissionRegister, createUserController.handle);
 router.delete("/users", ensurePermissionRegister, deleteUserController.handle);
 router.post(
   "/login",

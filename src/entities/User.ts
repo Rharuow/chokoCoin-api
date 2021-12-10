@@ -22,6 +22,12 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column()
+  token: string;
+
+  @Column()
+  isActive: boolean;
   
   @Column()
   isAdmin: boolean
