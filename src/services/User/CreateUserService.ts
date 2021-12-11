@@ -3,6 +3,7 @@ import { hash } from "bcryptjs";
 require("dotenv").config();
 
 import { UserRepository } from "../../repositories/UserRepository";
+import { sendConfirmationToken } from "../../utils/sendgrid";
 
 interface IUserRequest {
   username: string;
@@ -11,6 +12,17 @@ interface IUserRequest {
 }
 
 export class CreateUserService {
+  private generateConfirmationToken(): string {
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < 28; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   async execute({ username, email, password }: IUserRequest) {
     const userRepository = getCustomRepository(UserRepository);
 
@@ -25,15 +37,31 @@ export class CreateUserService {
 
     const isAdmin = email.includes(process.env.ADMIN_MAIL);
 
+    const token = this.generateConfirmationToken();
+
     const user = userRepository.create({
       username,
       email,
       password: passwordHashed,
       isAdmin,
+      token,
+      isActive: false,
     });
 
-    await userRepository.save(user);
+    try {
+      await userRepository.save(user);
 
-    return user;
+      await sendConfirmationToken({
+        email,
+        username,
+        id: user.id,
+        token,
+      });
+
+      return user;
+    } catch (error) {
+      console.log("Create User Service: ", error.message);
+      throw new Error(error.message);
+    }
   }
 }
