@@ -30,8 +30,16 @@ const rootController = new RootController();
 router.get("/user", ensureAuthenticated, getUserByTokenController.handle);
 
 router.get("/users", ensurePermissionRegister, listUserController.handle);
-router.post("/users", ensurePermissionRegister, registrateUserController.handle);
-router.post("/users/confirmation", ensurePermissionRegister, createUserController.handle);
+router.post(
+  "/users",
+  ensurePermissionRegister,
+  registrateUserController.handle
+);
+router.post(
+  "/users/confirmation",
+  ensurePermissionRegister,
+  createUserController.handle
+);
 router.delete("/users", ensurePermissionRegister, deleteUserController.handle);
 router.post(
   "/login",

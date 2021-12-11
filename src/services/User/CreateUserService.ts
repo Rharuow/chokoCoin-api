@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import { hash } from "bcryptjs";
-require('dotenv').config()
+require("dotenv").config();
 
 import { UserRepository } from "../../repositories/UserRepository";
 
@@ -23,13 +23,13 @@ export class CreateUserService {
       parseInt(process.env.HASH_SALTS)
     );
 
-    const isAdmin = email.includes(process.env.ADMIN)
+    const isAdmin = email.includes(process.env.ADMIN_MAIL);
 
     const user = userRepository.create({
       username,
       email,
       password: passwordHashed,
-      isAdmin
+      isAdmin,
     });
 
     await userRepository.save(user);
