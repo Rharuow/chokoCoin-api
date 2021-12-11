@@ -7,8 +7,6 @@ export function ensurePermissionRegister(
 ) {
   const { secret } = req.headers;
 
-  console.log("req = ", req.headers);
-
   if (!secret || secret !== process.env.USER_SECRET)
     return res.status(401).send("Not a sailor");
 
