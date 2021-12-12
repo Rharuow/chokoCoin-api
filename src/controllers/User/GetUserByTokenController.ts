@@ -9,6 +9,6 @@ export class GetUserByTokenController {
 
     const user = await getUserByTokenService.execute(token);
 
-    return res.json(user);
+    return res.json({ email: user.email, username: user.username });
   }
 }

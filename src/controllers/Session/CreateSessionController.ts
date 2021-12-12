@@ -7,7 +7,6 @@ export class CreateSessionController {
     const createSessionService = new CreateSessionService();
 
     try {
-      console.log("password = ", typeof req.body.password);
       const user = await createSessionService.execute(
         req.body.email,
         req.body.password

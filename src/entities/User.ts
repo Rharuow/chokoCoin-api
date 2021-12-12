@@ -27,10 +27,10 @@ export class User {
   token: string;
 
   @Column()
-  isActive: boolean;
-  
+  is_active: boolean;
+
   @Column()
-  isAdmin: boolean
+  is_admin: boolean;
 
   @CreateDateColumn()
   created_at: Date;

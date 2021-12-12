@@ -1,39 +1,32 @@
 import { getCustomRepository } from "typeorm";
-import { hash } from "bcryptjs";
 require("dotenv").config();
 
 import { UserRepository } from "../../repositories/UserRepository";
 
 interface IUserRequest {
-  username: string;
   email: string;
-  password: string;
+  token: string;
 }
 
 export class RegistrateUserService {
-  async execute({ username, email, password }: IUserRequest) {
+  async execute({ email, token }: IUserRequest) {
     const userRepository = getCustomRepository(UserRepository);
 
-    const userAlreadyExists = await userRepository.findOne({ email });
+    try {
+      const user = await userRepository.findOne({ email, token });
 
-    if (userAlreadyExists) throw new Error("User already exists");
+      console.log("user = ", user);
+      console.log("email and token ", email, token);
 
-    const passwordHashed = await hash(
-      password,
-      parseInt(process.env.HASH_SALTS)
-    );
+      await userRepository.update(
+        { email },
+        { is_active: true, token: user.id }
+      );
 
-    const isAdmin = email.includes(process.env.ADMIN_MAIL);
-
-    const user = userRepository.create({
-      username,
-      email,
-      password: passwordHashed,
-      isAdmin,
-    });
-
-    await userRepository.save(user);
-
-    return user;
+      return user;
+    } catch (error) {
+      console.log("catch > registration => ", error.message);
+      throw new Error(error.message);
+    }
   }
 }

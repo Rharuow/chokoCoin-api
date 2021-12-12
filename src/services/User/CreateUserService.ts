@@ -43,9 +43,9 @@ export class CreateUserService {
       username,
       email,
       password: passwordHashed,
-      isAdmin,
+      is_admin: isAdmin,
       token,
-      isActive: false,
+      is_active: false,
     });
 
     try {

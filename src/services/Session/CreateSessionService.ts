@@ -12,6 +12,8 @@ export class CreateSessionService {
         where: { email },
       });
 
+      if (!user.is_active) throw new Error("User not registred");
+
       const password_decoded = await bcrypt.compare(password, user.password);
       if (!password_decoded) throw new Error("Invalid password");
 
