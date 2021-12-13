@@ -21,6 +21,7 @@ export class CreateSessionService {
         id: user.id,
         username: user.username,
         email: user.email,
+        is_admin: user.is_admin,
       };
     } catch (error) {
       console.log("Create Session Service = ", error.message);

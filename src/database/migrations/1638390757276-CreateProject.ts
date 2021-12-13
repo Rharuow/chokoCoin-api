@@ -18,8 +18,7 @@ export class CreateProject1638390757276 implements MigrationInterface {
           },
           {
             name: "value",
-            type: "float",
-            isNullable: true,
+            type: "varchar",
           },
           {
             name: "created_at",

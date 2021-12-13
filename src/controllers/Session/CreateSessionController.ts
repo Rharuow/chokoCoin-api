@@ -13,7 +13,14 @@ export class CreateSessionController {
       );
 
       const token = jwt.sign(
-        { user: { email: user.email, id: user.id, username: user.username } },
+        {
+          user: {
+            email: user.email,
+            id: user.id,
+            username: user.username,
+            is_admin: user.is_admin,
+          },
+        },
         process.env.SECRET
       );
 

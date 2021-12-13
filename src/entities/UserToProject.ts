@@ -1,19 +1,24 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, ManyToOne, PrimaryColumn } from "typeorm";
 import { User } from "./User";
 import { Project } from "./Project";
+import { v4 as uuid } from "uuid";
 
-@Entity("usersToProjects")
+@Entity("users_to_projects")
 export class UserToProject {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  readonly id: string;
   @Column()
-  user_id: number;
+  user_id: string;
   @Column()
-  project_id: number;
+  project_id: string;
   @Column()
-  value: number;
+  value: string;
   @ManyToOne(() => User, (user) => user.userToProject)
   user: User;
   @ManyToOne(() => Project, (project) => project.projectToUser)
   project: Project;
+
+  constructor() {
+    if (!this.id) this.id = uuid();
+  }
 }
