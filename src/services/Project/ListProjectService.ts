@@ -7,6 +7,8 @@ export class ListProjectService {
 
     const projects = await projectRepository.find();
 
+    console.log("projects = ", projects[0]);
+
     return projects;
   }
 }

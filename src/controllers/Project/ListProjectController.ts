@@ -6,10 +6,11 @@ export class ListProjectController {
     const listProjectService = new ListProjectService();
 
     try {
-      const project = await listProjectService.execute();
+      const projects = await listProjectService.execute();
 
-      return res.json(project);
+      return res.json(projects);
     } catch (error) {
+      console.log("Error > List Projects By Users = ", error.message);
       return res.status(400).send(error.message);
     }
   }

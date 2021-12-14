@@ -2,11 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Project } from "./Project";
 import { UserToProject } from "./UserToProject";
 
 @Entity("users")
@@ -38,8 +41,23 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
+  @ManyToMany((type) => Project)
+  @JoinTable({
+    name: "user_projects", // table name for the junction table of this relation
+    joinColumn: {
+      name: "user",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "project",
+      referencedColumnName: "id",
+    },
+  })
+  projectsByUser: Project[];
+
   @OneToMany(() => UserToProject, (userToProject) => userToProject.user)
-  userToProject: UserToProject[];
+  @JoinTable()
+  projects: UserToProject[];
 
   constructor() {
     if (!this.id) this.id = uuid();
