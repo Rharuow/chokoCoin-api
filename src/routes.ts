@@ -39,7 +39,11 @@ router.post(
   "/login",
   /*ensurePermissionRegister,*/ createSessionController.handle
 );
-router.delete("/projects", ensureAuthenticated, deleteProjectController.handle);
+router.delete(
+  "/projects/:id",
+  ensureAuthenticated,
+  deleteProjectController.handle
+);
 router.post("/projects", ensureAuthenticated, createProjectController.handle);
 router.get("/projects", ensureAuthenticated, listProjectController.handle);
 

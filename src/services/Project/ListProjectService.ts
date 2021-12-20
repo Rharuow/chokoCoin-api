@@ -5,9 +5,13 @@ export class ListProjectService {
   async execute() {
     const projectRepository = getCustomRepository(ProjectRepository);
 
-    const projects = await projectRepository.find();
+    const projects = await projectRepository.find({
+      relations: ["users"],
+    });
 
-    console.log("projects = ", projects[0]);
+    projects.forEach((project) => {
+      console.log(project);
+    });
 
     return projects;
   }

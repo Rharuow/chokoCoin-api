@@ -42,20 +42,10 @@ export class User {
   updated_at: Date;
 
   @ManyToMany((type) => Project)
-  @JoinTable({
-    name: "user_projects", // table name for the junction table of this relation
-    joinColumn: {
-      name: "user",
-      referencedColumnName: "id",
-    },
-    inverseJoinColumn: {
-      name: "project",
-      referencedColumnName: "id",
-    },
-  })
+  @JoinTable()
   projectsByUser: Project[];
 
-  @OneToMany(() => UserToProject, (userToProject) => userToProject.user)
+  @OneToMany(() => UserToProject, (userToProject) => userToProject.project)
   @JoinTable()
   projects: UserToProject[];
 

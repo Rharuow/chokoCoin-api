@@ -1,7 +1,7 @@
 import { getCustomRepository } from "typeorm";
 
 import { ProjectRepository } from "../../repositories/ProjectRepository";
-import { UserToProjectRepository } from "../../repositories/UserToProject";
+import { UserToProjectRepository } from "../../repositories/UserToProjectRepository";
 import { GetUserByTokenService } from "../User/GetUserByTokenService";
 
 interface IProjectRequest {
@@ -35,7 +35,7 @@ export class CreateProjectService {
         project_id: project.id,
         value: "0",
         project,
-        user,
+        partner: user,
       });
 
       await projectRepository.save(project);

@@ -6,8 +6,6 @@ export class DeleteProjectController {
     const { id } = req.params;
     const token = req.headers.authorization as string;
 
-    console.log("req.params = ", req.params)
-/*
     const deleteProjectService = new DeleteProjectService();
 
     try {
@@ -20,6 +18,5 @@ export class DeleteProjectController {
     } catch (error) {
       return res.status(400).send(error.message);
     }
-*/
   }
 }
