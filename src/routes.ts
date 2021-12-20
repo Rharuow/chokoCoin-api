@@ -5,6 +5,7 @@ import { RegistrateUserController } from "./controllers/User/RegistrateUserContr
 import { DeleteUserController } from "./controllers/User/DeleteUserController";
 import { ListUserController } from "./controllers/User/ListUserController";
 import { GetUserByTokenController } from "./controllers/User/GetUserByTokenController";
+import { DeleteProjectController } from "./controllers/Project/DeleteProjectController";
 import { CreateProjectController } from "./controllers/Project/CreateProjectController";
 import { ListProjectController } from "./controllers/Project/ListProjectController";
 import { CreateSessionController } from "./controllers/Session/CreateSessionController";
@@ -22,6 +23,7 @@ const getUserByTokenController = new GetUserByTokenController();
 
 const createSessionController = new CreateSessionController();
 
+const deleteProjectController = new DeleteProjectController();
 const createProjectController = new CreateProjectController();
 const listProjectController = new ListProjectController();
 
@@ -37,6 +39,7 @@ router.post(
   "/login",
   /*ensurePermissionRegister,*/ createSessionController.handle
 );
+router.delete("/projects", ensureAuthenticated, deleteProjectController.handle);
 router.post("/projects", ensureAuthenticated, createProjectController.handle);
 router.get("/projects", ensureAuthenticated, listProjectController.handle);
 
