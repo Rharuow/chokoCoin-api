@@ -5,7 +5,9 @@ export class ListUserController {
   async handle(req: Request, res: Response) {
     const listUserService = new ListUserService();
 
-    const users = await listUserService.execute();
+    const { authorization } = req.headers;
+
+    const users = await listUserService.execute(authorization);
 
     return users.length > 0
       ? res.json(users)

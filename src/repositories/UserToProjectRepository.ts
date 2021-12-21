@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { UserToProject } from "../entities/UserToProject";
+import { GetUserByTokenService } from "../services/User/GetUserByTokenService";
 import { ProjectRepository } from "./ProjectRepository";
 import { UserRepository } from "./UserRepository";
 
@@ -32,21 +33,26 @@ export class UserToProjectRepository extends Repository<UserToProject> {
     return projects;
   }
 
-  async findUsersWithProjects() {
-    const usersRepository = getCustomRepository(UserRepository);
+  async findUsersWithProjects(token: string) {
+    const userRepository = getCustomRepository(UserRepository);
+    const getUserByToken = new GetUserByTokenService();
 
-    const allUsers = await usersRepository.find();
+    const allUsers = await userRepository.find();
 
     const projects = await this.findProjectsByPartners();
 
-    const users = allUsers.map((user) => ({
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      is_admin: user.is_admin,
-      is_active: user.is_active,
-      projects,
-    }));
+    const currentUser = await getUserByToken.execute(token);
+
+    const users = allUsers
+      .map((user) => ({
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        is_admin: user.is_admin,
+        is_active: user.is_active,
+        projects,
+      }))
+      .filter((user) => user.id !== currentUser.id);
 
     return users;
   }
