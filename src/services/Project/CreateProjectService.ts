@@ -29,7 +29,7 @@ export class CreateProjectService {
         name,
         value,
         users: [user],
-        partners: [user]
+        partners: [user],
       });
 
       const userToProject = userToProjectRepository.create({
@@ -42,7 +42,10 @@ export class CreateProjectService {
 
       await userToProjectRepository.save(userToProject);
 
-      return project;
+      const projectWithPartner =
+        userToProjectRepository.findProjectsByPartners();
+
+      return projectWithPartner;
     } catch (error) {
       console.log(" create project = ", error.message);
       throw new Error(error.message);
