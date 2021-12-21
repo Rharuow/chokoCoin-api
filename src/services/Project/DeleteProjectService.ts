@@ -27,7 +27,7 @@ export class DeleteProjectService {
 
       await projectRepository.delete(id);
 
-      const projects = await projectRepository.find();
+      const projects = await userToProjectRepository.findProjectsByPartners();
 
       return projects;
     } catch (error) {
