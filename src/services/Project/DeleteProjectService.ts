@@ -20,7 +20,7 @@ export class DeleteProjectService {
     try {
       const user = await getUserByTokenService.execute(token);
 
-      const userToPRoject = await userToProjectRepository.delete({
+      await userToProjectRepository.delete({
         user_id: user.id,
         project_id: id,
       });

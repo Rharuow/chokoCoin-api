@@ -1,18 +1,12 @@
 import { getCustomRepository } from "typeorm";
-import { ProjectRepository } from "../../repositories/ProjectRepository";
+import { UserToProjectRepository } from "../../repositories/UserToProjectRepository";
 
 export class ListProjectService {
   async execute() {
-    const projectRepository = getCustomRepository(ProjectRepository);
+    const usersToProjectRepository = getCustomRepository(UserToProjectRepository)
 
-    const projects = await projectRepository.find({
-      relations: ["users"],
-    });
+    const usersToProjects = await usersToProjectRepository.findProjectsByPartners();
 
-    projects.forEach((project) => {
-      console.log(project);
-    });
-
-    return projects;
+    return usersToProjects;
   }
 }

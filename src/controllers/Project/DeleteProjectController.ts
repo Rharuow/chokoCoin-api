@@ -9,12 +9,12 @@ export class DeleteProjectController {
     const deleteProjectService = new DeleteProjectService();
 
     try {
-      const project = await deleteProjectService.execute({
+      const projects = await deleteProjectService.execute({
         id,
         token,
       });
 
-      return res.json(project);
+      return res.json(projects);
     } catch (error) {
       return res.status(400).send(error.message);
     }

@@ -22,10 +22,10 @@ export class UserToProject {
   value: string;
   @ManyToOne(() => User)
   @JoinColumn({ name: "user_id" })
-  partner: User;
+  partners: User[];
   @ManyToOne(() => Project)
   @JoinColumn({ name: "project_id" })
-  project: Project;
+  projects: Project[];
 
   constructor() {
     if (!this.id) this.id = uuid();

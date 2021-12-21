@@ -28,14 +28,14 @@ export class CreateProjectService {
       const project = projectRepository.create({
         name,
         value,
+        users: [user],
+        partners: [user]
       });
 
       const userToProject = userToProjectRepository.create({
         user_id: user.id,
         project_id: project.id,
         value: "0",
-        project,
-        partner: user,
       });
 
       await projectRepository.save(project);

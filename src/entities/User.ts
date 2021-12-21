@@ -45,7 +45,7 @@ export class User {
   @JoinTable()
   projectsByUser: Project[];
 
-  @OneToMany(() => UserToProject, (userToProject) => userToProject.project)
+  @OneToMany(() => UserToProject, (userToProject) => userToProject.projects)
   @JoinTable()
   projects: UserToProject[];
 

@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   OneToMany,
@@ -33,8 +34,7 @@ export class Project {
   @JoinTable()
   users: User[];
 
-  @OneToMany(() => UserToProject, (usersToProject) => usersToProject.partner)
-  @JoinTable()
+  @OneToMany(() => UserToProject, (usersToProject) => usersToProject.partners)
   partners: UserToProject[];
 
   constructor() {
