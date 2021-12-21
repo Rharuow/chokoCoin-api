@@ -31,4 +31,23 @@ export class UserToProjectRepository extends Repository<UserToProject> {
 
     return projects;
   }
+
+  async findUsersWithProjects() {
+    const usersRepository = getCustomRepository(UserRepository);
+
+    const allUsers = await usersRepository.find();
+
+    const projects = await this.findProjectsByPartners();
+
+    const users = allUsers.map((user) => ({
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      is_admin: user.is_admin,
+      is_active: user.is_active,
+      projects,
+    }));
+
+    return users;
+  }
 }

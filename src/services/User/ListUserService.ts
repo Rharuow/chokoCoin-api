@@ -1,11 +1,11 @@
 import { getCustomRepository } from "typeorm";
-import { UserRepository } from "../../repositories/UserRepository";
+import { UserToProjectRepository } from "../../repositories/UserToProjectRepository";
 
 export class ListUserService {
   async execute() {
-    const userRepository = getCustomRepository(UserRepository);
+    const userRepository = getCustomRepository(UserToProjectRepository);
 
-    const users = await userRepository.find();
+    const users = await userRepository.findUsersWithProjects();
 
     return users;
   }
