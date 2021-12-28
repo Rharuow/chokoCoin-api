@@ -11,6 +11,6 @@ export class ListUserController {
 
     return users.length > 0
       ? res.json(users)
-      : res.json({ message: "There isn't user registred" });
+      : res.json(null);
   }
 }
