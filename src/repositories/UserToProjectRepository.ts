@@ -37,7 +37,7 @@ export class UserToProjectRepository extends Repository<UserToProject> {
     const userRepository = getCustomRepository(UserRepository);
     const getUserByToken = new GetUserByTokenService();
 
-    const allUsers = await userRepository.find();
+    const allUsers = await userRepository.find({ is_active: true });
 
     const projects = await this.findProjectsByPartners();
 
