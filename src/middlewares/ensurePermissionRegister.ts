@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+require("dotenv").config();
 
 export function ensurePermissionRegister(
   req: Request,
