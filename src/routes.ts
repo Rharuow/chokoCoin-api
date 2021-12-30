@@ -47,6 +47,8 @@ router.delete(
 router.post("/projects", ensureAuthenticated, createProjectController.handle);
 router.get("/projects", ensureAuthenticated, listProjectController.handle);
 
+router.put("users/:userId/projects/:projectID", ensureAuthenticated, () => console.log("subscribe users"))
+
 router.get("/", rootController.run);
 
 export { router };
